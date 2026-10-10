@@ -1,0 +1,13 @@
+geopandas
+shapely
+pandas
+numpy
+pyarrow
+scikit-learn
+pointpats
+mapclassify
+pysal
+contextily
+matplotlib
+seaborn
+jupyterlab
