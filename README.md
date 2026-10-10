@@ -2,7 +2,7 @@
 
 Spatial analysis of 50 years of Canadian wildfire data to find **persistent fire-prone zones** – independent of provincial boundaries – and to see how they shift over time.
 
-![KDE epicenters of fire-prone zones by decade](figures/kde_epicenters_by_decade.png)
+![KDE epicenters of fire-prone zones by decade](kde_epicenters_by_decade.png)
 
 ## Key findings
 
@@ -14,11 +14,11 @@ Spatial analysis of 50 years of Canadian wildfire data to find **persistent fire
 
 | Yearly burned area | Causes over decades |
 |---|---|
-| ![](figures/yearly_area_burnt.png) | ![](figures/causes_over_decades.png) |
+| ![](yearly_area_burnt.png) | ![](causes_over_decades.png) |
 
 | Ripley's G (2014–2023) | DBSCAN clusters (2023) |
 |---|---|
-| ![](figures/ripley_g_2014_2023.png) | ![](figures/dbscan_clusters.png) |
+| ![](ripley_g_2014_2023.png) | ![](dbscan_clusters.png) |
 
 ## Approach
 
@@ -38,8 +38,8 @@ Python · GeoPandas · Shapely · PySAL (pointpats, mapclassify) · scikit-learn
 ## Repository structure
 
 ```
-notebooks/wildfire_spatial_analysis.ipynb   # main analysis (ESDA, trends, Ripley's G, DBSCAN, KDE)
-figures/                                    # exported maps and charts
+wildfire_spatial_analysis.ipynb   # main analysis (ESDA, trends, Ripley's G, DBSCAN, KDE)
+*.png                             # exported maps and charts
 ```
 
 ## Running it
@@ -47,16 +47,16 @@ figures/                                    # exported maps and charts
 The data is not included (the raw shapefiles are ~850 MB).
 
 1. Download the NBAC shapefile from the [Canadian Wildland Fire Information System](https://cwfis.cfs.nrcan.gc.ca/datamart). Newer releases include 2024, so filter to `year <= 2023` to reproduce these results.
-2. Convert it to GeoParquet at `data/data.parquet`:
+2. Convert it to GeoParquet (the notebook reads `../data/data.parquet` via `fp_par`; change that path if you store it elsewhere):
    ```python
    import geopandas as gpd
    gdf = gpd.read_file("nbac_1972_2023_20240530.shp")
-   gdf[gdf["YEAR"].between(1972, 2023)].rename(columns=str.lower).to_parquet("data/data.parquet")
+   gdf[gdf["YEAR"].between(1972, 2023)].rename(columns=str.lower).to_parquet("../data/data.parquet")
    ```
 3. Install dependencies and open the notebook:
    ```bash
    pip install -r requirements.txt
-   jupyter lab notebooks/wildfire_spatial_analysis.ipynb
+   jupyter lab wildfire_spatial_analysis.ipynb
    ```
 
 The original environment was the course Docker image `darribas/gds_py:8.0`.
